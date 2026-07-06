@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma" // where to put generated code (JS/TS)
+}
+
+// from what data base we fetch data
+datasource db { 
+  provider = "sqlite"
+}
+
+// init table Studio in data base
+model Studio { 
+  id String @id @default(cuid()) // key for a table, generated if not specified
+  name String @unique
+  events Event[]
+}
+
+model Instructor {
+  id String @id @default(cuid())
+  name String @unique
+  events Event[]
+}
+
+model Student {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  bookings Booking[]
+}
+
+model Event {
+  id String @id @default(cuid())
+  title String
+  style String
+  level String
+  dayOfWeek String
+  startTime String
+  date DateTime
+  price Int 
+  capacity Int 
+  booked Int
+  studio Studio @relation(fields: [studioId], references: [id])
+  studioId String
+  instructor Instructor @relation(fields: [instructorId], references: [id])
+  instructorId String
+  bookings Booking[]
+}
+
+model Booking {
+  id String @id @default(cuid())
+  status String
+  amount Int
+  bookedAt DateTime
+  event Event @relation(fields: [eventId], references: [id])
+  eventId String
+  student Student @relation(fields: [studentId], references: [id])
+  studentId String
+}
