@@ -61,3 +61,11 @@ model Booking {
   student Student @relation(fields: [studentId], references: [id])
   studentId String
 }
+
+model StyleTrend {
+  id String @id @default(cuid())
+  month  String // format "2026-01"
+  style  String
+  pct    Float  // percentage of a style popularity this month
+}
+
