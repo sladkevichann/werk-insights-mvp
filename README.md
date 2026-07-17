@@ -1,36 +1,141 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Werk Insights MVP
+
+A mobile-first analytics prototype for Werk that turns class, booking, studio, and student data into actionable insights for dance teachers.
+
+## Overview
+
+Werk Insights explores how Werk could help dance teachers understand what is working in their business, not just manage the operations of listing classes and collecting payments.
+
+The MVP uses generated demo data to power an `Insights` tab with metrics around style demand, schedule performance, studio performance, and monthly trends.
+
+## Features
+
+- Style popularity based on booking share
+- Best scheduling windows based on class fill rate
+- Top studio ranking by average fill rate
+- Monthly style trend data
+- Mobile-first dashboard UI inspired by Werk's product experience
+- Seeded local database with realistic demo data
+
+## Tech Stack
+
+- Next.js
+- React
+- TypeScript
+- Prisma ORM
+- SQLite
+- Python
+- Pandas
+- Faker
+
+## Architecture
+
+```text
+Python data generation
+        -> JSON demo datasets
+        -> Prisma seed script
+        -> SQLite database
+        -> Next.js API routes
+        -> React dashboard
+```
+
+## Project Structure
+
+```text
+app/
+  api/insights/        Insight API routes
+  lib/prisma.ts        Prisma client setup
+  page.tsx             Dashboard UI
+  page.module.css      Dashboard styles
+
+data-pipeline/
+  generate_data.py     Generates demo students, events, and bookings
+  analyze_trend.py     Calculates monthly style trend data
+  *.json               Generated demo datasets
+
+prisma/
+  schema.prisma        Database schema
+  seed.ts              Loads demo data into SQLite
+  migrations/          Database migration history
+```
 
 ## Getting Started
 
-First, run the development server:
+Create a local environment file:
+
+```bash
+cp .env.example .env
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+This installs the project dependencies, including Prisma.
+
+Generate the Prisma client:
+
+```bash
+npm run prisma:generate
+```
+
+Seed the local database:
+
+```bash
+npm run seed
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Available Scripts
 
-## Learn More
+```bash
+npm run dev      # Start the development server
+npm run build    # Build the app for production
+npm run lint     # Run ESLint
+npm run prisma:generate # Generate the Prisma client
+npm run seed     # Seed the local SQLite database
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Data Model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The MVP models the core entities needed for analytics:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `Studio`
+- `Instructor`
+- `Student`
+- `Event`
+- `Booking`
+- `StyleTrend`
 
-## Deploy on Vercel
+These entities are intentionally close to real marketplace and scheduling concepts, so the prototype could be adapted to production data sources later.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Current Limitations
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Uses generated demo data instead of production Werk data
+- No authentication or teacher-specific accounts
+- No live Stripe integration
+- Insights are descriptive, not predictive
+- No automated test coverage yet
+- UI is optimized for a mobile product demo
+
+## Next Steps
+
+- Connect the dashboard to real Werk event and booking data
+- Add teacher-level filtering and date ranges
+- Add revenue and payment metrics
+- Add recommendation logic for scheduling and programming decisions
+- Add tests for insight calculations
+- Expand the layout for a production desktop dashboard if needed

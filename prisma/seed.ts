@@ -81,6 +81,15 @@ async function main() {
     const bookings = loadJson<BookingRow[]>("bookings.json")
     const styleTrend = loadJson<StyleTrendRow[]>("style_trend.json")
 
+    console.log("Clearing old demo data...")
+
+    await prisma.booking.deleteMany()
+    await prisma.event.deleteMany()
+    await prisma.styleTrend.deleteMany()
+    await prisma.student.deleteMany()
+    await prisma.instructor.deleteMany()
+    await prisma.studio.deleteMany()
+
     const studioNames: string[] = [...new Set(events.map((e) => e.studio))]
 
     const instructorNames: string[] = [...new Set(events.map((e) => e.instructor))]
@@ -162,8 +171,6 @@ async function main() {
     })
   }
     console.log(`Making ${styleTrend.length} trend notes...`)
-
-    await prisma.styleTrend.deleteMany()
 
     for (const t of styleTrend) {
        await prisma.styleTrend.create({

@@ -296,7 +296,6 @@ export default function Home() {
             )}
           </section>
 
-          <div className={styles.footerNote}>Concept by Kalista Joy - Insights tab, mobile</div>
         </div>
       </section>
     </main>
