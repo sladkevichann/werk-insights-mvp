@@ -269,8 +269,8 @@ export default function Home() {
           </section>
 
           <section className={styles.card}>
-            <div className={styles.cardTitle}>Style trend</div>
-            <div className={styles.cardSub}>Latest generated month by style</div>
+            <div className={styles.cardTitle}>This month&apos;s style mix</div>
+            <div className={styles.cardSub}>Share of scheduled classes by dance style</div>
             {loading ? (
               <div className={styles.loading}>Loading...</div>
             ) : (
